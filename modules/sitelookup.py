@@ -71,7 +71,7 @@ def lookup_for_updates() -> (list, str):
 
     for i in news:
         if i['date'] == '' or i['title'] == '' or i['link'] == '':
-            return {}, f"Возникла ошибка при получении данных\n```{i=}```"
+            return [], f"Возникла ошибка при получении данных\n```{i=}```"
 
     print(news)
 
