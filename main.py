@@ -30,7 +30,7 @@ start_router = Router()
 
 @start_router.message(CommandStart())
 async def start(message: Message):
-    await bot.send_message(message.chat.id, "Данный бот предназначен для публикации новостей ЕНЛ СПБГПУ в канал <a href='https://t.me/nslspbstu'>Новости ЕНЛ СПБГПУ</a>")
+    await bot.send_message(message.chat.id, "Данный бот предназначен для публикации новостей ЕНЛ СПбПУ в канал <a href='https://t.me/nslspbstu'>Новости ЕНЛ СПбПУ</a>")
 
 
 @start_router.message()
