@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 
 prev_new = {}
-prev_new_file = "./prev_new_backup.txt"
+prev_new_file_path = "./prev_new_backup.txt"
 
 def month_prettify(month: str) -> str:
     months = {
@@ -29,7 +29,7 @@ def month_prettify(month: str) -> str:
 
 def lookup_for_updates() -> (list, str):
     global prev_new
-    global prev_new_file
+    global prev_new_file_path
 
     headers = {
         "Accept": "text/html",
@@ -62,16 +62,21 @@ def lookup_for_updates() -> (list, str):
 
         last_news.append(news)
 
-    with open(prev_new_file, 'r+') as prev_new_file:
+    with open(prev_new_file_path, 'r+') as prev_new_file:
         prev_new_raw = prev_new_file.readline().split(';')
-        prev_new = {
-            "date": prev_new_raw[0],
-            "title": prev_new_raw[1],
-            "link": prev_new_raw[2],
-        }
+        if prev_new_raw[0] == '':
+            prev_new = {}
+        else:
+            prev_new = {
+                "date": prev_new_raw[0],
+                "title": prev_new_raw[1],
+                "link": prev_new_raw[2],
+            }
 
     if not prev_new:
         prev_new = last_news[-1]
+
+    last_news.reverse()
 
     news = last_news[:last_news.index(prev_new):]
 
@@ -84,10 +89,10 @@ def lookup_for_updates() -> (list, str):
 
     print(news)
 
-    prev_new = news[0]
+    prev_new = news[-1]
 
-    with open(prev_new_file, 'w+') as prev_new_file:
+    with open(prev_new_file_path, 'w+') as prev_new_file:
         prev_new_file.write(';'.join(prev_new.values()))
 
-    return news.reverse(), ""
+    return news, ""
 

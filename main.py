@@ -41,6 +41,7 @@ async def unknown(message: Message):
 async def send_news():
     site_msgs, err = modules.make_message.mk_msg_site()
     if err == "Обновлений нет":
+        print(err)
         pass
     elif err != None:
         await bot.send_message(ADMIN_ID, err)
@@ -60,6 +61,7 @@ async def main():
     try:
         loop = asyncio.get_event_loop()
         loop.create_task(send_news_scheduler())
+        # await send_news()
 
         dp.include_router(start_router)
         await bot.delete_webhook(drop_pending_updates=True)
