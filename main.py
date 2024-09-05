@@ -44,11 +44,13 @@ async def send_news():
         print(err)
         pass
     elif err != None:
+        print(err)
         await bot.send_message(ADMIN_ID, err)
     else:
         for site_msg in site_msgs:
             await bot.send_message(CHANNEL_ID, site_msg)
             await asyncio.sleep(10)
+            print(site_msg)
 
 
 async def send_news_scheduler():
@@ -67,6 +69,7 @@ async def main():
         await bot.delete_webhook(drop_pending_updates=True)
         await dp.start_polling(bot)
     finally:
+        # pass
         await dp.storage.close()
         await bot.session.close()
 

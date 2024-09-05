@@ -64,7 +64,7 @@ def lookup_for_updates() -> (list, str):
 
     with open(prev_new_file_path, 'r+') as prev_new_file:
         prev_new_raw = prev_new_file.readline().split(';')
-        if prev_new_raw[0] == '':
+        if prev_new_raw == ['']:
             prev_new = {}
         else:
             prev_new = {
@@ -74,11 +74,11 @@ def lookup_for_updates() -> (list, str):
             }
 
     if not prev_new:
-        prev_new = last_news[-1]
+        news = last_news
+    else:
+        news = last_news[:last_news.index(prev_new):]
 
-    last_news.reverse()
-
-    news = last_news[:last_news.index(prev_new):]
+    # print(last_news)
 
     if len(news) == 0:
         return [], "Обновлений нет"
@@ -89,10 +89,10 @@ def lookup_for_updates() -> (list, str):
 
     print(news)
 
-    prev_new = news[-1]
+    prev_new = news[0]
 
     with open(prev_new_file_path, 'w+') as prev_new_file:
         prev_new_file.write(';'.join(prev_new.values()))
 
-    return news, ""
+    return reversed(news), ""
 
