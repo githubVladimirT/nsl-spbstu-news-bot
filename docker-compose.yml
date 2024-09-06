@@ -1,0 +1,6 @@
+services:
+  nsl-spbstu-news-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: main.py
