@@ -64,21 +64,18 @@ def lookup_for_updates() -> (list, str):
 
     with open(prev_new_file_path, 'r+') as prev_new_file:
         prev_new_raw = prev_new_file.readline().split(';')
-        if prev_new_raw == ['']:
-            prev_new = {}
-        else:
+        print(f"PREV_NEW_RAW: {prev_new_raw}")
+        if prev_new_raw != ['']:
             prev_new = {
                 "date": prev_new_raw[0],
                 "title": prev_new_raw[1],
                 "link": prev_new_raw[2],
             }
 
-    if not prev_new:
-        news = last_news
-    else:
+    if prev_new:
         news = last_news[:last_news.index(prev_new):]
-
-    # print(last_news)
+    else:
+        news = last_news
 
     if len(news) == 0:
         return [], "Обновлений нет"
